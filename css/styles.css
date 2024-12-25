@@ -1,0 +1,69 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    transition: all 0.35s linear;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url(../img/view.jpg) center/cover no-repeat;
+    position: relative;
+}
+
+.xtree {
+    width: 240px;
+    height: 240px;
+    transform-style: preserve-3d;
+    /*додаємо 3Д трансформацію*/
+    perspective: 1000px;
+    /*ефект глибини для 3Д трансформації, чим менше значення, тим об'єкт буде ближче*/
+    position: relative;
+    bottom: -35px;
+    transform: rotateX(90deg);
+    /*повертаємо об'єкт доверху*/
+    animation: xtree 8s linear infinite;
+    /*создаємо анімацію*/
+}
+
+
+
+/*використовуємо створений span*/
+.xtree span {
+    /*створюємо змінну для висоти, використовуючи створену змінну у js*/
+    --height: calc(240px - (var(--i)*2px));
+    /*с кожною ітерацією елемент і зменшується, що дає візуалізацію піраміди*/
+    display: block;
+    width: 10px;
+    height: var(--height);
+    margin-top: calc(var(--i)*1px);
+    /*отримуємо отступ зверху, який збільшується на 2рх при кожній ітерації*/
+    background-image: linear-gradient(to bottom, #71be71, #134228, #73f76e);
+    border-radius: 10px;
+    position: absolute;
+    left: calc(50% - 6px);
+
+    /*Перша частина: повертає елемент навколо осі Z (перпендикулярної до екрана). 
+    Кут повороту збільшується на 34 градуси за кожну ітерацію (var(--i)).
+     Це створює обертання елементів навколо центральної точки,на зразок гілок ялинки,які відходять від стовбура.
+     Друга частина: переміщує елемент по осі Z (уздовж глибини екрана). 
+     Кожен елемент йде далі від центру на 3 пікселі,помножених на var(--i). Це створює глибину,
+    ніби елементи розташовуються шарами або віддаляються.*/
+    transform: rotateZ(calc(34deg * var(--i))) translateZ(calc(3px * var(--i)));
+}
+
+
+/*використовуємо анімацію*/
+@keyframes xtree {
+    from {
+        transform: rotateX(60deg) rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateX(60deg) rotateZ(360deg);
+    }
+}
